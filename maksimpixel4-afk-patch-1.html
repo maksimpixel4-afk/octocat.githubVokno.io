@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Віконце Плюс — Шпола | Вікна, Двері, Стелі, Водостоки</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --accent: #d4af37;
+            --text-main: #333333;
+            --white: #ffffff;
+            --bg-body: #f8fafc;
+            --draw-line: rgba(10, 25, 47, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+
+        /* --- Шапка --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--primary); text-decoration: none; text-transform: uppercase; }
+        .logo span { color: var(--accent); }
+
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .phone-top { text-decoration: none; color: var(--accent); font-weight: 700; transition: 0.3s; }
+        .phone-top:hover { transform: scale(1.05); }
+
+        .lang-btn {
+            cursor: pointer; border: 1px solid var(--draw-line); background: transparent;
+            padding: 6px 15px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;
+        }
+
+        /* --- Hero блок --- */
+        .hero {
+            height: 60vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: var(--white);
+            background: var(--primary);
+            position: relative; overflow: hidden; padding: 0 5%;
+        }
+        .hero::before {
+            content: ''; position: absolute; width: 200%; height: 200%;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px; animation: gridMove 60s linear infinite;
+        }
+        @keyframes gridMove { from { transform: translate(0,0); } to { transform: translate(-40px,-40px); } }
+
+        .hero h1 { font-size: 3rem; font-weight: 700; position: relative; z-index: 1; text-transform: uppercase; }
+        .hero p { font-size: 1.2rem; position: relative; z-index: 1; opacity: 0.8; max-width: 750px; }
+
+        /* --- Сітка карток --- */
+        .container { padding: 80px 5%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 35px; }
+
+        .card {
+            background: var(--white); border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(10,25,47,0.1); }
+
+        .img-placeholder {
+            height: 220px; background: #f1f5f9;
+            display: flex; justify-content: center; align-items: center; position: relative;
+        }
+
+        /* --- CSS ГРАФІКА (МАЛЮНКИ) --- */
+
+        /* 1. Стеля 3D */
+        .ico-ceiling-wrapper { perspective: 150px; display: flex; justify-content: center; align-items: center; }
+        .ico-ceiling-3d {
+            width: 130px; height: 75px; background: #fff; border: 2px solid var(--draw-line);
+            transform: rotateX(45deg); position: relative; transition: 0.5s;
+        }
+        .light-spot {
+            position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 20px; border: 2px solid var(--draw-line); border-radius: 50%; transition: 0.5s;
+        }
+        .card:hover .ico-ceiling-3d { border-color: var(--accent); box-shadow: 0 5px 20px rgba(212,175,55,0.2); }
+        .card:hover .light-spot { border-color: var(--accent); box-shadow: 0 0 15px var(--accent); background: #fff; }
+
+        /* 2. Вікно */
+        .ico-win { width: 70px; height: 95px; border: 2.5px solid var(--draw-line); position: relative; transition: 0.5s; }
+        .ico-win::before { content: ''; position: absolute; top: 50%; width: 100%; height: 2.5px; background: var(--draw-line); transition: 0.5s; }
+        .ico-win::after { content: ''; position: absolute; left: 50%; height: 100%; width: 2.5px; background: var(--draw-line); transition: 0.5s; }
+        .card:hover .ico-win, .card:hover .ico-win::before, .card:hover .ico-win::after { border-color: var(--accent); background-color: var(--accent); }
+
+        /* 3. Двері */
+        .ico-door { width: 60px; height: 100px; border: 2.5px solid var(--draw-line); border-bottom: none; position: relative; transition: 0.5s; }
+        .ico-door::after { content: ''; position: absolute; right: 10px; top: 50px; width: 7px; height: 7px; background: var(--draw-line); border-radius: 50%; transition: 0.5s; }
+        .card:hover .ico-door { border-color: var(--accent); }
+        .card:hover .ico-door::after { background: var(--accent); }
+
+        /* 4. Паркан */
+        .ico-fence { 
+            width: 110px; height: 65px; 
+            background: repeating-linear-gradient(90deg, var(--draw-line), var(--draw-line) 7px, transparent 7px, transparent 16px); 
+            border-bottom: 3.5px solid var(--draw-line); transition: 0.5s;
+        }
+        .card:hover .ico-fence { background: repeating-linear-gradient(90deg, var(--accent), var(--accent) 7px, transparent 7px, transparent 16px); border-color: var(--accent); }
+
+        /* 6. Водостічна система (ОНОВЛЕНО) */
+        .ico-drain-system { position: relative; width: 120px; height: 140px; }
+        .drain-gutter {
+            width: 110px; height: 14px; background: linear-gradient(to bottom, #eee, #ccc);
+            border: 2px solid var(--draw-line); border-radius: 0 0 10px 10px;
+            position: absolute; top: 20px; left: 5px; transition: 0.5s;
+        }
+        .drain-funnel {
+            width: 30px; height: 22px; background: #eee; border: 2px solid var(--draw-line);
+            border-top: none; position: absolute; top: 32px; right: 15px;
+            border-radius: 0 0 12px 12px; z-index: 2; transition: 0.5s;
+        }
+        .drain-pipe {
+            width: 12px; height: 85px; background: linear-gradient(to right, #eee, #ccc);
+            border: 2px solid var(--draw-line); border-bottom: none;
+            position: absolute; top: 52px; right: 24px; transition: 0.5s;
+        }
+        .drain-elbow {
+            width: 28px; height: 12px; background: linear-gradient(to bottom, #eee, #ccc);
+            border: 2px solid var(--draw-line); border-radius: 0 10px 10px 0;
+            position: absolute; bottom: -5px; left: -2px; transform: rotate(20deg); transition: 0.5s;
+        }
+        .card:hover .drain-gutter, .card:hover .drain-funnel, .card:hover .drain-pipe, .card:hover .drain-elbow { border-color: var(--accent); }
+
+        /* --- Текстові блоки --- */
+        .card-body { padding: 30px; text-align: center; flex-grow: 1; }
+        .card-body h3 { margin-bottom: 12px; font-size: 1.3rem; color: var(--primary); text-transform: uppercase; }
+        .card-body p { font-size: 0.95rem; color: #64748b; font-weight: 400; }
+
+        /* --- Консультація --- */
+        .callback {
+            background: var(--white); padding: 80px 5%; margin: 40px 5%; border-radius: 30px;
+            text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+        }
+        .callback h2 { font-size: 2.2rem; margin-bottom: 30px; color: var(--primary); text-transform: uppercase; }
+        .callback input {
+            padding: 16px; width: 100%; max-width: 350px; margin: 10px;
+            border: 1px solid #e2e8f0; border-radius: 12px; font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .callback input:focus { border-color: var(--accent); }
+        .btn-send {
+            padding: 16px 50px; background: var(--primary); color: #fff;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+        }
+        .btn-send:hover { background: var(--accent); transform: scale(1.03); }
+
+        /* --- Футер --- */
+        footer { background: var(--primary); color: #fff; padding: 60px 5%; text-align: center; }
+        footer a { color: var(--accent); text-decoration: none; font-weight: 700; font-size: 1.4rem; display: block; margin-top: 15px; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-right .phone-top { display: none; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo">Віконце<span>Плюс</span></a>
+    <div class="nav-right">
+        <a href="tel:+380730785355" class="phone-top">+38 (073) 078 53 55</a>
+        <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    </div>
+</header>
+
+<section class="hero">
+    <h1 id="hTitle">Якість та комфорт вашої оселі</h1>
+    <p id="hSub">Преміальні вікна, двері та натяжні стелі у Шполі та Черкаській області.</p>
+</section>
+
+<div class="container">
+    <div class="grid">
+        <div class="card">
+            <div class="img-placeholder">
+                <div class="ico-ceiling-wrapper">
+                    <div class="ico-ceiling-3d"><div class="light-spot"></div></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 data-key="c1T">Натяжні стелі</h3>
+                <p data-key="c1D">Ідеально рівна поверхня, великий вибір кольорів та сучасне освітлення за 1 день.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-placeholder">
+                <div class="ico-win"></div>
+            </div>
+            <div class="card-body">
+                <h3 data-key="c2T">Металопластикові вікна</h3>
+                <p data-key="c2D">Енергоефективні системи Steko та Rehau. Збережіть тепло та тишу у вашій оселі.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-placeholder">
+                <div class="ico-door"></div>
+            </div>
+            <div class="card-body">
+                <h3 data-key="c3T">Вхідні двері</h3>
+                <p data-key="c3D">Міцні броньовані двері з надійними замками для захисту вашого будинку.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-placeholder">
+                <div class="ico-door" style="border-style: dashed; opacity: 0.6;"></div>
+            </div>
+            <div class="card-body">
+                <h3 data-key="c4T">Міжкімнатні двері</h3>
+                <p data-key="c4D">Вишуканий дизайн, екошпон та натуральне дерево для кожної кімнати.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-placeholder">
+                <div class="ico-fence"></div>
+            </div>
+            <div class="card-body">
+                <h3 data-key="c5T">Огорожі та паркани</h3>
+                <p data-key="c5D">Сучасні рішення: профнастил, євроштахетник та паркани-жалюзі під ключ.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-placeholder">
+                <div class="ico-drain-system">
+                    <div class="drain-gutter"></div>
+                    <div class="drain-funnel"></div>
+                    <div class="drain-pipe"><div class="drain-elbow"></div></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 data-key="c6T">Водостічні системи</h3>
+                <p data-key="c6D">Ефективний водовідвід для повного захисту стін та фундаменту вашої будівлі.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="callback">
+    <h2 id="fTitle">Безкоштовна консультація</h2>
+    <form id="contactForm">
+        <input type="text" id="nameInp" placeholder="Ваше ім'я" required>
+        <input type="tel" id="telInp" placeholder="+38 (073) 078 53 55" required>
+        <button type="submit" class="btn-send" id="btnSend">Замовити дзвінок</button>
+    </form>
+</section>
+
+<footer>
+    <p><strong>© 2026 Віконце Плюс</strong></p>
+    <p id="fLoc">м. Шпола, Черкаська область</p>
+    <a href="tel:+380730785355">+38 (073) 078 53 55</a>
+    <a href="tel:+380678139805">+38 (067) 813 98 05</a>
+</footer>
+
+<script>
+    let curLang = 'UA';
+    const langData = {
+        UA: {
+            lBtn: 'EN', hTitle: 'Якість та комфорт вашої оселі', hSub: 'Преміальні вікна, двері та натяжні стелі у Шполі та Черкаській області.',
+            fTitle: 'Безкоштовна консультація', btnSend: 'Замовити дзвінок', nP: 'Ваше ім\'я', tP: '+38 (073) 078 53 55', fLoc: 'м. Шпола, Черкаська область',
+            c1T: 'Натяжні стелі', c1D: 'Ідеально рівна поверхня, великий вибір кольорів та сучасне освітлення за 1 день.',
+            c2T: 'Металопластикові вікна', c2D: 'Енергоефективні системи Steko та Rehau. Збережіть тепло та тишу у вашій оселі.',
+            c3T: 'Вхідні двері', c3D: 'Міцні броньовані двері з надійними замками для захисту вашого будинку.',
+            c4T: 'Міжкімнатні двері', c4D: 'Вишуканий дизайн, екошпон та натуральне дерево для кожної кімнати.',
+            c5T: 'Огорожі та паркани', c5D: 'Сучасні рішення: профнастил, євроштахетник та паркани-жалюзі під ключ.',
+            c6T: 'Водостічні системи', c6D: 'Ефективний водовідвід для повного захисту стін та фундаменту вашої будівлі.'
+        },
+        EN: {
+            lBtn: 'UA', hTitle: 'Quality and Comfort for Your Home', hSub: 'Premium windows, doors, and stretch ceilings in Shpola and Cherkasy region.',
+            fTitle: 'Free Consultation', btnSend: 'Request a Call', nP: 'Your Name', tP: 'Phone Number', fLoc: 'Shpola city, Cherkasy region',
+            c1T: 'Stretch Ceilings', c1D: 'Perfectly flat surface, large choice of colors and modern lighting in 1 day.',
+            c2T: 'PVC Windows', c2D: 'Energy-efficient Steko and Rehau systems. Keep warmth and silence in your home.',
+            c3T: 'Entrance Doors', c3D: 'Durable armored doors with reliable locks for your home protection.',
+            c4T: 'Interior Doors', c4D: 'Exquisite design, eco-veneer, and natural wood for every room.',
+            c5T: 'Fences & Railings', c5D: 'Modern solutions: corrugated board, euro-paling and blind-fences turnkey.',
+            c6T: 'Rain Systems', c6D: 'Effective water drainage to fully protect the walls and foundation of your building.'
+        }
+    };
+
+    function toggleLang() {
+        curLang = (curLang === 'UA') ? 'EN' : 'UA';
+        const t = langData[curLang];
+        document.getElementById('langBtn').innerText = t.lBtn;
+        document.getElementById('hTitle').innerText = t.hTitle;
+        document.getElementById('hSub').innerText = t.hSub;
+        document.getElementById('fTitle').innerText = t.fTitle;
+        document.getElementById('btnSend').innerText = t.btnSend;
+        document.getElementById('fLoc').innerText = t.fLoc;
+        document.getElementById('nameInp').placeholder = t.nP;
+        document.getElementById('telInp').placeholder = t.tP;
+        document.querySelectorAll('[data-key]').forEach(el => { el.innerText = t[el.getAttribute('data-key')]; });
+    }
+
+    document.getElementById('contactForm').onsubmit = function(e) {
+        e.preventDefault();
+        alert(curLang === 'UA' ? 'Дякуємо! Ми зателефонуємо вам скоро.' : 'Thank you! We will call you back soon.');
+        this.reset();
+    };
+</script>
+
+</body>
+</html>
